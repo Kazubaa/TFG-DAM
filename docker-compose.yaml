@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: mysql:8.1
+    container_name: concesionario-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: concesionario
+      MYSQL_USER: concesionario
+      MYSQL_PASSWORD: concesionario
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: .   
+      dockerfile: Dockerfile
+    container_name: concesionario-api
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      JWT_SECRET: fF3d6hG7kJ9lM2nP4qR6tS8vX0yZ2aB5cD7eF9gH0iJ1kL2mN3oP4qR6sT8uV0wX
+      MYSQL_USER: concesionario
+      MYSQL_PASSWORD: concesionario
+    depends_on:
+      - db
+    volumes:
+      - ./uploads:/app/uploads
+
+volumes:
+  db_data:
