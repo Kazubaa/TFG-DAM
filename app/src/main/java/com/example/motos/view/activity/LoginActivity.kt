@@ -15,6 +15,7 @@ import com.example.motos.viewmodel.AuthState
 import com.example.motos.viewmodel.AuthViewModel
 import com.example.motos.viewmodel.AuthViewModelFactory
 import com.google.android.material.tabs.TabLayout
+import java.util.Locale
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,6 +29,13 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val locale = Locale("es", "ES")
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        createConfigurationContext(config)
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -93,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
                     session.saveRol(state.data.rol)
                     session.saveUsername(state.data.username)
                     session.saveId(state.data.id)
+                    state.data.clienteId?.let { session.saveClienteId(it) }
                     goToMain()
                 }
                 is AuthState.Error -> {

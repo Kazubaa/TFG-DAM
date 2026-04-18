@@ -10,6 +10,10 @@ import com.example.motos.databinding.ActivityMainBinding
 import com.example.motos.utils.SessionManager
 import com.example.motos.view.activity.LoginActivity
 import com.example.motos.view.fragment.InicioFragment
+import com.example.motos.view.fragment.MotoSegundaManoFragment
+import com.example.motos.view.fragment.PerfilFragment
+import com.example.motos.view.fragment.ReservasFragment
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +22,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val locale = Locale("es", "ES") //fuerza a que se ponga en ESP
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        createConfigurationContext(config)
+
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -55,7 +67,9 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_segunda -> {
-                    // TODO: SegundaManoFragment
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, MotoSegundaManoFragment())
+                        .commit()
                     true
                 }
                 R.id.nav_taller -> {
@@ -73,28 +87,48 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSettingsMenu() {
         val rol = session.getRol() ?: "INVITADO"
+        android.util.Log.d("ROL_DETALLE", "Rol recibido: '$rol'")
         val anchor = binding.bottomNav.findViewById<View>(R.id.nav_ajustes)
 
         val popup = PopupMenu(this, anchor)
 
         popup.menu.add(0, 1, 0, "Perfil")
 
-        when (rol) {
-            "CLIENTE" -> popup.menu.add(0, 2, 1, "Mis reservas")
-            "MECANICO", "ADMIN" -> {
-                popup.menu.add(0, 2, 1, "Citas")
-                popup.menu.add(0, 3, 2, "Reparaciones")
-            }
-            "VENDEDOR" -> popup.menu.add(0, 2, 1, "Reservas")
+        if (rol == "CLIENTE" || rol == "ADMIN") {
+            popup.menu.add(0, 2, 1, "Mis reservas")
+        }
+        if (rol == "MECANICO" || rol == "ADMIN") {
+            popup.menu.add(0, 3, 2, "Citas")
+            popup.menu.add(0, 4, 3, "Reparaciones")
+        }
+        if (rol == "ADMIN" || rol == "VENDEDOR") {
+            popup.menu.add(0, 5, 4, "Solicitudes de reservas")
         }
 
         popup.menu.add(0, 99, 99, "Cerrar sesión")
 
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                1 -> { /* TODO: PerfilFragment */ true }
-                2 -> { /* TODO: según rol */ true }
-                3 -> { /* TODO: según rol */ true }
+                1 -> { supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, PerfilFragment())
+                    .addToBackStack(null)
+                    .commit()
+                    true }
+                2 -> {  supportFragmentManager.beginTransaction() //reservas cliente
+                    .replace(R.id.fragmentContainer, ReservasFragment())
+                    .addToBackStack(null)
+                    .commit()
+                    true }
+                3 -> { /* TODO: Mecanico */ true }
+                4 ->{ /* TODO: Funcion mecanico mostrar citas*/true}
+                5 -> {
+                    // Solicitudes de reservas
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, ReservasFragment())
+                        .addToBackStack(null)
+                        .commit()
+                    true
+                }
                 99 -> {
                     session.logout()
                     startActivity(Intent(this, LoginActivity::class.java))

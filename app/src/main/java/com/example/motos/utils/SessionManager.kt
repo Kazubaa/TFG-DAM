@@ -22,4 +22,7 @@ class SessionManager(context: Context) {
     fun isLoggedIn(): Boolean = getToken() != null
 
     fun logout() = prefs.edit().clear().apply()
+
+    fun saveClienteId(id: Long) = prefs.edit().putLong("clienteId", id).apply()
+    fun getClienteId(): Long = prefs.getLong("clienteId", -1)
 }
