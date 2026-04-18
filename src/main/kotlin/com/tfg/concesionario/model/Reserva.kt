@@ -31,7 +31,10 @@ data class Reserva(
     val motoSegundaMano: MotoSegundaMano? = null,
 
     @Column(nullable = false)
-    var fecha: LocalDate = LocalDate.now(),
+    var fecha: LocalDate,
+
+    @Column(nullable = false)
+    val hora: LocalTime,
 
     @Column(nullable = false)
     var estado: String = "PENDIENTE"  // PENDIENTE, ACEPTADA, RECHAZADA

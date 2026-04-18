@@ -22,7 +22,7 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequest): Map<String, Any> {
+    fun login(@RequestBody request: LoginRequest): Map<String, Any?> {
 
         val usuario = usuarioService.getByUsername(request.username)
             ?: throw RuntimeException("Usuario no encontrado")
@@ -42,14 +42,15 @@ class AuthController(
             "token" to token,
             "id" to usuario.id,
             "username" to usuario.username,
-            "rol" to usuario.rol.name
+            "rol" to usuario.rol.name,
+            "clienteId" to usuario.cliente?.id
         )
     }
 
 
 
     @PostMapping("/register")
-    fun register(@RequestBody request: RegisterRequest): Map<String, Any> {
+    fun register(@RequestBody request: RegisterRequest): Map<String, Any?> {
         val usuario = Usuario(
             username = request.username,
             password = request.password,  // el service lo encripta
@@ -59,7 +60,8 @@ class AuthController(
         return mapOf(
             "id" to saved.id,
             "username" to saved.username,
-            "rol" to saved.rol.name
+            "rol" to saved.rol.name,
+            "clienteId" to saved.cliente?.id
         )
     }
 }

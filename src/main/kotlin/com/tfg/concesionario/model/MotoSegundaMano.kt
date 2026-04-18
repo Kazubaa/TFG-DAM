@@ -33,6 +33,9 @@ data class MotoSegundaMano(
     val cilindrada: Int,
 
     @Column(nullable = false)
+    val km: Int,
+
+    @Column(nullable = false)
     val cv: Int,
 
     @Column(nullable = false, unique = true)

@@ -22,6 +22,7 @@ interface MotoSegundaManoRepository : JpaRepository<MotoSegundaMano, Long> {
         WHERE (:marca IS NULL OR m.marca = :marca)
           AND (:modelo IS NULL OR m.modelo LIKE %:modelo%)
           AND (:cvMax IS NULL OR m.cv <= :cvMax)
+          AND (:km IS NULL OR m.km <= :km)
           AND (:cilindradaMax IS NULL OR m.cilindrada <= :cilindradaMax)
           AND (:precioMax IS NULL OR m.precio <= :precioMax)
           AND (:matricula IS NULL OR m.matricula = :matricula)
@@ -30,6 +31,7 @@ interface MotoSegundaManoRepository : JpaRepository<MotoSegundaMano, Long> {
         @Param("marca") marca: String?,
         @Param("modelo") modelo: String?,
         @Param("cvMax") cvMax: Int?,
+        @Param("km") km: Int?,
         @Param("cilindradaMax") cilindradaMax: Int?,
         @Param("precioMax") precioMax: Double?,
         @Param("matricula") matricula: String?

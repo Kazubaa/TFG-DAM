@@ -42,13 +42,16 @@ class SecurityConfig(private val jwtFilter: JwtFilter) {
             .authorizeHttpRequests {
                 it
                     .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/uploads/**").permitAll()
                     .requestMatchers("/usuarios/**").hasRole("ADMIN")
+                    .requestMatchers("/clientes/**").hasAnyRole("ADMIN","CLIENTE","VENDEDOR")
                     .requestMatchers("/motos/**").permitAll()
                     .requestMatchers("/imagenes/promociones/**").permitAll()
                     .requestMatchers("/imagenes/promomecanico/**").permitAll()
+                    .requestMatchers("/imagenes/motosegundamano/**").permitAll()
                     .requestMatchers("/imagenes/upload").hasAnyRole("ADMIN","VENDEDOR")
                     .requestMatchers("/imagenes/**").permitAll()
-                    .requestMatchers("/motosSegundaMano/**").hasAnyRole("ADMIN","VENDEDOR","CLIENTE")
+                    .requestMatchers("/motosSegundaMano/**").permitAll()
                     .requestMatchers("/reservas/**").hasAnyRole("ADMIN","CLIENTE","VENDEDOR")
                     .requestMatchers("/ventas/**").hasAnyRole("ADMIN","VENDEDOR")
                     .requestMatchers("/citas/**").hasAnyRole("ADMIN","CLIENTE","MECANICO","VENDEDOR")

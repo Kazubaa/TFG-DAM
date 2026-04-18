@@ -1,5 +1,6 @@
 package com.tfg.concesionario.controller
 
+import com.tfg.concesionario.dto.ClienteRequest
 import com.tfg.concesionario.model.Cliente
 import com.tfg.concesionario.service.ClienteService
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -22,11 +23,13 @@ class ClienteController(private val service: ClienteService) {
     @GetMapping("/{id}")
     fun getOne(@PathVariable id: Long): Cliente = service.get(id).orElseThrow { RuntimeException("Cliente no encontrado") }
 
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: Long, @RequestBody request: ClienteRequest): Cliente {
+        return service.update(id, request)
+    }
+
     @PostMapping
     fun create(@RequestBody cliente: Cliente): Cliente = service.save(cliente)
-
-    @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody cliente: Cliente): Cliente = service.update(id, cliente)
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long) = service.delete(id)

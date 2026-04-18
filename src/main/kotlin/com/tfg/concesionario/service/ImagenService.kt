@@ -47,7 +47,7 @@ class ImagenService(
         val imagen = imagenRepo.findById(id)
             .orElseThrow { RuntimeException("Imagen no encontrada") }
 
-        Files.deleteIfExists(Paths.get("/app/imagenes/sehunda/" + imagen.url))
+        Files.deleteIfExists(Paths.get("/app/imagenes/segunda/" + imagen.url))
         imagenRepo.delete(imagen)
     }
 

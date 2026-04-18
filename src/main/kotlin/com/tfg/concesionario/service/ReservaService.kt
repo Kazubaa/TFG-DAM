@@ -9,7 +9,6 @@ import com.tfg.concesionario.repository.ReservaRepository
 import org.springframework.stereotype.Service
 import java.util.Optional
 
-
 @Service
 class ReservaService(
     private val repo: ReservaRepository,
@@ -21,6 +20,8 @@ class ReservaService(
     fun getAll(): List<Reserva> = repo.findAll()
 
     fun get(id: Long): Optional<Reserva> = repo.findById(id)
+
+    fun getByCliente(clienteId: Long): List<Reserva> = repo.findByClienteId(clienteId)
 
     fun save(request: ReservaRequest): Reserva {
         val cliente = clienteRepo.findById(request.clienteId)
@@ -35,7 +36,7 @@ class ReservaService(
             m
         }
 
-        motoSegundaMano?.let { motoSegundaManoRepo.save(it.copy(disponible = false)) }
+        // ⚠️ Ya NO se marca como no disponible al crear - solo al aceptar
 
         return repo.save(
             Reserva(
@@ -43,9 +44,36 @@ class ReservaService(
                 moto = moto,
                 motoSegundaMano = motoSegundaMano,
                 fecha = request.fecha,
-                estado = request.estado
+                hora = request.hora,
+                estado = "PENDIENTE"
             )
         )
+    }
+
+    fun actualizarEstado(id: Long, estado: String): Reserva {
+        val reserva = repo.findById(id).orElseThrow { RuntimeException("Reserva no encontrada") }
+
+        when (estado) {
+            "ACEPTADA" -> {
+                // Al aceptar, marcar la moto como no disponible
+                reserva.motoSegundaMano?.let {
+                    motoSegundaManoRepo.save(it.copy(disponible = false))
+                }
+            }
+            "RECHAZADA" -> {
+                // Al rechazar, no hay que cambiar nada (la moto seguía disponible)
+            }
+            "CANCELADA" -> {
+                // Si estaba aceptada y se cancela, devolver disponibilidad
+                if (reserva.estado == "ACEPTADA") {
+                    reserva.motoSegundaMano?.let {
+                        motoSegundaManoRepo.save(it.copy(disponible = true))
+                    }
+                }
+            }
+        }
+
+        return repo.save(reserva.copy(estado = estado))
     }
 
     fun update(id: Long, request: ReservaRequest): Reserva {
@@ -59,16 +87,13 @@ class ReservaService(
             motoSegundaManoRepo.findById(it).orElseThrow { RuntimeException("Moto segunda mano no encontrada") }
         }
 
-        if (request.estado == "CANCELADA" || request.estado == "RECHAZADA") {
-            existing.motoSegundaMano?.let { motoSegundaManoRepo.save(it.copy(disponible = true)) }
-        }
-
         return repo.save(
             existing.copy(
                 cliente = cliente,
                 moto = moto,
                 motoSegundaMano = motoSegundaMano,
                 fecha = request.fecha,
+                hora = request.hora,
                 estado = request.estado
             )
         )

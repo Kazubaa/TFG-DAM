@@ -17,10 +17,11 @@ class MotoSegundaManoService(private val repo: MotoSegundaManoRepository) {
         marca: String?,
         modelo: String?,
         cvMax: Int?,
+        km: Int?,
         cilindradaMax: Int?,
         precioMax: Double?,
         matricula: String?
-    ): List<MotoSegundaMano> = repo.filtrar(marca, modelo, cvMax, cilindradaMax, precioMax, matricula)
+    ): List<MotoSegundaMano> = repo.filtrar(marca, modelo,cvMax,km,cilindradaMax,precioMax, matricula)
 
     fun getMarcas(): List<String> = repo.findDistinctMarcas()
     fun findByMarcaAndModelo(marca: String, modelo: String): List<MotoSegundaMano> =

@@ -45,4 +45,11 @@ class PromocionController {
         if (!file.exists()) throw RuntimeException("Imagen no encontrada")
         return file.readBytes()
     }
+
+    @GetMapping("/motosegundamano/{filename}", produces = [MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE])
+    fun getMotoImage(@PathVariable filename: String): ByteArray {
+        val file = File("/app/uploads/imagenes/motosegundamano/$filename")
+        if (!file.exists()) throw RuntimeException("Imagen no encontrada")
+        return file.readBytes()
+    }
 }
