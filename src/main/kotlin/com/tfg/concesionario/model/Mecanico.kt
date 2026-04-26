@@ -20,5 +20,5 @@ data class Mecanico(
     @Column(nullable = false)
     val telefono: String,
     @Column(nullable = false)
-    val disponible: Boolean
+    val disponible: Boolean = true
 )

@@ -5,7 +5,14 @@ import java.time.LocalDate
 data class ReparacionRequest(
     val citaId: Long,
     val mecanicoId: Long,
+    val descripcion: String = "",
+    val items: List<ItemReparacionRequest> = emptyList(),
+    val estado: String = "BORRADOR"
+)
+
+data class ItemReparacionRequest(
     val descripcion: String,
-    val fecha: LocalDate = LocalDate.now(),
-    val estado: String = "PENDIENTE"
+    val tipo: String,
+    val cantidad: Double,
+    val precioUnitario: Double
 )

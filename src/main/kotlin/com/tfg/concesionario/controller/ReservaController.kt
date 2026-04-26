@@ -40,4 +40,10 @@ class ReservaController(private val service: ReservaService) {
     @PutMapping("/{id}/estado")
     fun actualizarEstado(@PathVariable id: Long, @RequestParam estado: String): Reserva =
         service.actualizarEstado(id, estado)
+
+    @GetMapping("/moto/{motoId}")
+    fun getReservaActivaByMoto(@PathVariable motoId: Long): Reserva? =
+        service.getReservaActivaByMoto(motoId)
+
+
 }

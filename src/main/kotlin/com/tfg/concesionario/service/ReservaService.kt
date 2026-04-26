@@ -36,7 +36,7 @@ class ReservaService(
             m
         }
 
-        // ⚠️ Ya NO se marca como no disponible al crear - solo al aceptar
+       
 
         return repo.save(
             Reserva(
@@ -64,11 +64,8 @@ class ReservaService(
                 // Al rechazar, no hay que cambiar nada (la moto seguía disponible)
             }
             "CANCELADA" -> {
-                // Si estaba aceptada y se cancela, devolver disponibilidad
-                if (reserva.estado == "ACEPTADA") {
-                    reserva.motoSegundaMano?.let {
-                        motoSegundaManoRepo.save(it.copy(disponible = true))
-                    }
+                reserva.motoSegundaMano?.let {
+                    motoSegundaManoRepo.save(it.copy(disponible = true))
                 }
             }
         }
@@ -97,6 +94,12 @@ class ReservaService(
                 estado = request.estado
             )
         )
+    }
+
+    fun getReservaActivaByMoto(motoId: Long): Reserva? {
+        return repo.findByMotoSegundaManoIdAndEstadoIn(
+            motoId, listOf("PENDIENTE", "ACEPTADA")
+        ).firstOrNull()
     }
 
     fun delete(id: Long) = repo.deleteById(id)

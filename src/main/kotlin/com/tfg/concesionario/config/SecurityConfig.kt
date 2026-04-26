@@ -46,6 +46,7 @@ class SecurityConfig(private val jwtFilter: JwtFilter) {
                     .requestMatchers("/usuarios/**").hasRole("ADMIN")
                     .requestMatchers("/clientes/**").hasAnyRole("ADMIN","CLIENTE","VENDEDOR")
                     .requestMatchers("/motos/**").permitAll()
+                    .requestMatchers("/motoCliente/**").hasAnyRole("ADMIN","CLIENTE","MECANICO")
                     .requestMatchers("/imagenes/promociones/**").permitAll()
                     .requestMatchers("/imagenes/promomecanico/**").permitAll()
                     .requestMatchers("/imagenes/motosegundamano/**").permitAll()
@@ -55,7 +56,7 @@ class SecurityConfig(private val jwtFilter: JwtFilter) {
                     .requestMatchers("/reservas/**").hasAnyRole("ADMIN","CLIENTE","VENDEDOR")
                     .requestMatchers("/ventas/**").hasAnyRole("ADMIN","VENDEDOR")
                     .requestMatchers("/citas/**").hasAnyRole("ADMIN","CLIENTE","MECANICO","VENDEDOR")
-                    .requestMatchers("/reparaciones/**").hasAnyRole("ADMIN","MECANICO")
+                    .requestMatchers("/reparaciones/**").hasAnyRole("ADMIN","MECANICO", "CLIENTE")
                     .anyRequest().authenticated()
             }
 

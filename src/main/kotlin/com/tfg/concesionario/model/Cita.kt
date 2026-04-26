@@ -12,16 +12,8 @@ import java.time.LocalTime
 
 @Entity
 data class Cita(
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-
-    @Column(nullable = false)
-    val fecha: LocalDate,
-
-    @Column(nullable = false)
-    val hora: LocalTime,
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -29,8 +21,24 @@ data class Cita(
 
     @ManyToOne
     @JoinColumn(name = "mecanico_id")
-    var mecanico: Mecanico? = null,
+    val mecanico: Mecanico? = null,
+
+    @ManyToOne
+    @JoinColumn(name = "moto_matricula")
+    val motoCliente: MotoCliente? = null,
 
     @Column(nullable = false)
-    var estado: String = "PENDIENTE"  // PENDIENTE, CONFIRMADA, CANCELADA
+    val fecha: LocalDate,
+
+    @Column(nullable = false)
+    val hora: LocalTime,
+
+    @Column(nullable = false)
+    val tipo: String = "REVISION",  // REVISION / MANTENIMIENTO
+
+    @Column(columnDefinition = "TEXT")
+    val descripcion: String? = null,
+
+    @Column(nullable = false)
+    var estado: String = "PENDIENTE"  // PENDIENTE, ACEPTADA, RECHAZADA, COMPLETADA
 )
