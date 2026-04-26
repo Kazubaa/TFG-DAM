@@ -53,6 +53,8 @@ class SecurityConfig(private val jwtFilter: JwtFilter) {
                     .requestMatchers("/imagenes/upload").hasAnyRole("ADMIN","VENDEDOR")
                     .requestMatchers("/imagenes/**").permitAll()
                     .requestMatchers("/motosSegundaMano/**").permitAll()
+                    .requestMatchers("/mecanicos/**").hasAnyRole("ADMIN","MECANICO")
+                    .requestMatchers("/vendedores/**").hasAnyRole("ADMIN","VENDEDOR")
                     .requestMatchers("/reservas/**").hasAnyRole("ADMIN","CLIENTE","VENDEDOR")
                     .requestMatchers("/ventas/**").hasAnyRole("ADMIN","VENDEDOR")
                     .requestMatchers("/citas/**").hasAnyRole("ADMIN","CLIENTE","MECANICO","VENDEDOR")

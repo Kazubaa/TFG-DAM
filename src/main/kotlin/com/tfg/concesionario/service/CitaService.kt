@@ -91,7 +91,10 @@ class CitaService(
 
     fun delete(id: Long) = repo.deleteById(id)
 
-    
+    /**
+     * Devuelve los mecánicos libres en una fecha/hora concreta.
+     * Un mecánico está ocupado si tiene una cita ACEPTADA en esa franja.
+     */
     fun getMecanicosDisponibles(fecha: LocalDate, hora: LocalTime): List<Long> {
         val todos = mecanicoRepo.findAll().map { it.id }
         val ocupadosIds = repo.findByFechaAndHora(fecha, hora)

@@ -36,7 +36,7 @@ class ReservaService(
             m
         }
 
-       
+        // ⚠️ Ya NO se marca como no disponible al crear - solo al aceptar
 
         return repo.save(
             Reserva(
