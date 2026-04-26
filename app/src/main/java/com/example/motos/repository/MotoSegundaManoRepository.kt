@@ -36,11 +36,6 @@ class MotoSegundaManoRepository(private val api: ApiService) {
     }
 
 
-    suspend fun actualizarReserva(id: Long, request: ReservaRequest): Reserva? {
-        val response = api.actualizarReserva(id, request)
-        return if (response.isSuccessful) response.body() else null
-    }
-
     suspend fun getImagenes(motoId: Long): List<ImagenMoto> {
         val response = api.getImagenesMoto(motoId)
         return if (response.isSuccessful) response.body() ?: emptyList()
@@ -86,5 +81,10 @@ class MotoSegundaManoRepository(private val api: ApiService) {
     suspend fun actualizarEstadoReserva(id: Long, estado: String): Reserva? {
         val response = api.actualizarEstadoReserva(id, estado)
         return if (response.isSuccessful) response.body() else null
+    }
+
+    suspend fun getReservaActivaByMoto(motoId: Long): Reserva? {
+        val r = api.getReservaActivaByMoto(motoId)
+        return if (r.isSuccessful) r.body() else null
     }
 }

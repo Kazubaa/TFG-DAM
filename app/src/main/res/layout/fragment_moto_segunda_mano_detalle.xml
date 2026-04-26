@@ -350,8 +350,9 @@
                         android:textStyle="bold"
                         android:layout_marginBottom="16dp"/>
 
-                </LinearLayout>
 
+
+                </LinearLayout>
                 <Button
                     android:id="@+id/btnReservar"
                     android:layout_width="match_parent"
@@ -363,34 +364,19 @@
                     android:visibility="gone"
                     android:layout_marginBottom="8dp"/>
 
-                <!-- Botones ADMIN/VENDEDOR para reservas -->
-                <LinearLayout
-                    android:id="@+id/layoutReservaAdmin"
+                <Button
+                    android:id="@+id/btnCancelarReserva"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_height="56dp"
+                    android:text="CANCELAR RESERVA"
+                    android:backgroundTint="#C62828"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
                     android:visibility="gone"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp"/>
 
-                    <Button
-                        android:id="@+id/btnAceptarReserva"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="ACEPTAR"
-                        android:backgroundTint="#2E7D32"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginEnd="8dp"/>
 
-                    <Button
-                        android:id="@+id/btnRechazarReserva"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="RECHAZAR"
-                        android:backgroundTint="#C62828"
-                        android:textColor="#FFFFFF"/>
-                </LinearLayout>
+
 
             </LinearLayout>
         </LinearLayout>

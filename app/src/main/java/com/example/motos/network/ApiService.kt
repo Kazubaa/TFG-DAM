@@ -1,15 +1,26 @@
 package com.example.motos.network
 
+import com.example.motos.model.Cita
+import com.example.motos.model.CitaRequest
 import com.example.motos.model.Cliente
 import com.example.motos.model.ClienteRequest
 import com.example.motos.model.ImagenMoto
 import com.example.motos.model.LoginRequest
 import com.example.motos.model.LoginResponse
+import com.example.motos.model.Mecanico
+import com.example.motos.model.MecanicoRequest
+import com.example.motos.model.MecanicoSimple
+import com.example.motos.model.MotoCliente
+import com.example.motos.model.MotoClienteRequest
 import com.example.motos.model.MotoSegundaMano
 import com.example.motos.model.MotoSegundaManoRequest
 import com.example.motos.model.RegisterRequest
+import com.example.motos.model.Reparacion
+import com.example.motos.model.ReparacionRequest
 import com.example.motos.model.Reserva
 import com.example.motos.model.ReservaRequest
+import com.example.motos.model.Vendedor
+import com.example.motos.model.VendedorRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -113,4 +124,115 @@ interface ApiService {
         @Path("id") id: Long,
         @Body request: ClienteRequest
     ): Response<Cliente>
+
+
+
+
+    @GET("motoCliente/cliente/{clienteId}")
+    suspend fun getMotosCliente(@Path("clienteId") clienteId: Long): Response<List<MotoCliente>>
+
+    @POST("motoCliente")
+    suspend fun crearMotoCliente(@Body request: MotoClienteRequest): Response<MotoCliente>
+
+    @PUT("motoCliente/{matricula}")
+    suspend fun actualizarMotoCliente(
+        @Path("matricula") matricula: String,
+        @Body request: MotoClienteRequest
+    ): Response<MotoCliente>
+
+    @DELETE("motoCliente/{matricula}")
+    suspend fun eliminarMotoCliente(@Path("matricula") matricula: String): Response<Unit>
+
+    // Citas
+    @GET("citas/cliente/{clienteId}")
+    suspend fun getCitasCliente(@Path("clienteId") clienteId: Long): Response<List<Cita>>
+
+    @GET("citas")
+    suspend fun getCitas(): Response<List<Cita>>
+
+    @POST("citas")
+    suspend fun crearCita(@Body request: CitaRequest): Response<Cita>
+
+    @PUT("citas/{id}/estado")
+    suspend fun actualizarEstadoCita(
+        @Path("id") id: Long,
+        @Query("estado") estado: String,
+        @Query("mecanicoId") mecanicoId: Long? = null
+    ): Response<Cita>
+
+
+
+
+
+    @GET("reparaciones")
+    suspend fun getReparaciones(): Response<List<Reparacion>>
+
+    @GET("reparaciones/{id}")
+    suspend fun getReparacion(@Path("id") id: Long): Response<Reparacion>
+
+    @GET("reparaciones/moto/{matricula}")
+    suspend fun getReparacionesByMoto(@Path("matricula") matricula: String): Response<List<Reparacion>>
+
+    @GET("reparaciones/cliente/{clienteId}")
+    suspend fun getReparacionesByCliente(@Path("clienteId") clienteId: Long): Response<List<Reparacion>>
+
+    @POST("reparaciones")
+    suspend fun crearReparacion(@Body request: ReparacionRequest): Response<Reparacion>
+
+    @PUT("reparaciones/{id}")
+    suspend fun actualizarReparacion(
+        @Path("id") id: Long,
+        @Body request: ReparacionRequest
+    ): Response<Reparacion>
+
+    @PUT("reparaciones/{id}/estado")
+    suspend fun actualizarEstadoReparacion(
+        @Path("id") id: Long,
+        @Query("estado") estado: String
+    ): Response<Reparacion>
+
+
+    @GET("reservas/moto/{motoId}")
+    suspend fun getReservaActivaByMoto(@Path("motoId") motoId: Long): Response<Reserva?>
+
+
+
+    @GET("citas/disponibilidad")
+    suspend fun getMecanicosDisponibles(
+        @Query("fecha") fecha: String,
+        @Query("hora") hora: String
+    ): Response<List<Long>>
+
+    @PUT("citas/{id}")
+    suspend fun actualizarCita(
+        @Path("id") id: Long,
+        @Body request: CitaRequest
+    ): Response<Cita>
+
+    @DELETE("citas/{id}")
+    suspend fun eliminarCita(@Path("id") id: Long): Response<Unit>
+
+    @GET("mecanicos")
+    suspend fun getMecanicos(): Response<List<MecanicoSimple>>
+
+    @GET("reparaciones/mecanico/{mecanicoId}")
+    suspend fun getReparacionesByMecanico(@Path("mecanicoId") mecanicoId: Long): Response<List<Reparacion>>
+
+    @GET("mecanicos/{id}")
+    suspend fun getMecanico(@Path("id") id: Long): Response<Mecanico>
+
+    @PUT("mecanicos/{id}")
+    suspend fun actualizarMecanico(
+        @Path("id") id: Long,
+        @Body request: MecanicoRequest
+    ): Response<Mecanico>
+
+    @GET("vendedores/{id}")
+    suspend fun getVendedor(@Path("id") id: Long): Response<Vendedor>
+
+    @PUT("vendedores/{id}")
+    suspend fun actualizarVendedor(
+        @Path("id") id: Long,
+        @Body request: VendedorRequest
+    ): Response<Vendedor>
 }

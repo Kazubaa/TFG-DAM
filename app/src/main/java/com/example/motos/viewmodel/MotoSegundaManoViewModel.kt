@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.motos.model.ImagenMoto
 import com.example.motos.model.MotoSegundaMano
 import com.example.motos.model.MotoSegundaManoRequest
+import com.example.motos.model.Reserva
 import com.example.motos.model.ReservaRequest
 import com.example.motos.repository.MotoSegundaManoRepository
 import kotlinx.coroutines.launch
@@ -186,6 +187,20 @@ class MotoSegundaManoViewModel(private val repository: MotoSegundaManoRepository
                 onComplete()
             } catch (e: Exception) {
                 onComplete()
+            }
+        }
+    }
+
+
+    private val _reservaActiva = MutableLiveData<Reserva?>()
+    val reservaActiva: LiveData<Reserva?> = _reservaActiva
+
+    fun cargarReservaActiva(motoId: Long) {
+        viewModelScope.launch {
+            try {
+                _reservaActiva.value = repository.getReservaActivaByMoto(motoId)
+            } catch (e: Exception) {
+                _reservaActiva.value = null
             }
         }
     }

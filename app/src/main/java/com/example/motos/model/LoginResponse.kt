@@ -5,5 +5,7 @@ data class LoginResponse(
     val id: Long,
     val username: String,
     val rol: String,
-    val clienteId: Long? = null
+    val clienteId: Long? = null,
+    val mecanicoId: Long? = null,
+    val vendedorId: Long? = null
 )

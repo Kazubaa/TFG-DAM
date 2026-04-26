@@ -17,12 +17,16 @@ class SessionManager(context: Context) {
     fun getUsername(): String? = prefs.getString("username", null)
 
     fun saveId(id: Long) = prefs.edit().putLong("id", id).apply()
-    fun getId(): Long = prefs.getLong("id", -1)
-
     fun isLoggedIn(): Boolean = getToken() != null
 
     fun logout() = prefs.edit().clear().apply()
 
     fun saveClienteId(id: Long) = prefs.edit().putLong("clienteId", id).apply()
     fun getClienteId(): Long = prefs.getLong("clienteId", -1)
+
+    fun saveMecanicoId(id: Long) = prefs.edit().putLong("mecanicoId", id).apply()
+    fun getMecanicoId(): Long = prefs.getLong("mecanicoId", -1)
+
+    fun saveVendedorId(id: Long) = prefs.edit().putLong("vendedorId", id).apply()
+    fun getVendedorId(): Long = prefs.getLong("vendedorId", -1)
 }

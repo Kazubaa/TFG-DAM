@@ -239,19 +239,9 @@ class MotoSegundaManoDetalleFragment : Fragment() {
             abrirGaleria()
         }
 
-        // Botones de reserva para admin/vendedor
         if (!disponible) {
-            binding.layoutReservaAdmin.visibility = View.VISIBLE
-            binding.btnAceptarReserva.setOnClickListener {
-                reservaId?.let { id ->
-                    viewModel.actualizarEstadoReserva(id, "ACEPTADA")
-                }
-            }
-            binding.btnRechazarReserva.setOnClickListener {
-                reservaId?.let { id ->
-                    viewModel.actualizarEstadoReserva(id, "RECHAZADA")
-                }
-            }
+            viewModel.cargarReservaActiva(motoId)
+
         }
     }
 
@@ -286,7 +276,7 @@ class MotoSegundaManoDetalleFragment : Fragment() {
             .setTitle("Selecciona hora")
             .setItems(horas.toTypedArray()) { _, which ->
                 val hora = "${horas[which]}:00"
-                val clienteId = session.getClienteId()  // ✅ cambio aquí
+                val clienteId = session.getClienteId()
                 if (clienteId == -1L) {
                     Toast.makeText(context, "Debes iniciar sesión como cliente", Toast.LENGTH_SHORT).show()
                     return@setItems
@@ -347,6 +337,22 @@ class MotoSegundaManoDetalleFragment : Fragment() {
                     Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
                 }
                 else -> {}
+            }
+        }
+
+        viewModel.reservaActiva.observe(viewLifecycleOwner) { reserva ->
+            if (reserva != null && !disponible) {
+                binding.btnCancelarReserva.visibility = View.VISIBLE
+                binding.btnCancelarReserva.setOnClickListener {
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Cancelar reserva")
+                        .setMessage("La moto volverá a estar disponible. ¿Continuar?")
+                        .setPositiveButton("Sí, cancelar") { _, _ ->
+                            viewModel.actualizarEstadoReserva(reserva.id, "CANCELADA")
+                        }
+                        .setNegativeButton("No", null)
+                        .show()
+                }
             }
         }
 

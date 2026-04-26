@@ -102,6 +102,8 @@ class LoginActivity : AppCompatActivity() {
                     session.saveUsername(state.data.username)
                     session.saveId(state.data.id)
                     state.data.clienteId?.let { session.saveClienteId(it) }
+                    state.data.mecanicoId?.let { session.saveMecanicoId(it) }
+                    state.data.vendedorId?.let { session.saveVendedorId(it) }
                     goToMain()
                 }
                 is AuthState.Error -> {

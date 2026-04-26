@@ -41,7 +41,7 @@ class MotoSegundaManoFragment : Fragment() {
 
         setupRecycler()
         setupFiltros()
-        setupBtnAñadir()
+        setupBtnAnadir()
         observeViewModel()
         viewModel.cargarMotos()
 
@@ -126,7 +126,7 @@ class MotoSegundaManoFragment : Fragment() {
             .commit()
     }
 
-    private fun setupBtnAñadir() {
+    private fun setupBtnAnadir() {
         val rol = com.example.motos.utils.SessionManager(requireContext()).getRol() ?: "INVITADO"
         if (rol == "ADMIN" || rol == "VENDEDOR") {
             binding.btnAnadir.visibility = View.VISIBLE
