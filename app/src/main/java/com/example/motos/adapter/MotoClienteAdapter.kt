@@ -1,6 +1,7 @@
 package com.example.motos.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.motos.databinding.ItemMotoClienteBinding
@@ -9,7 +10,8 @@ import com.example.motos.model.MotoCliente
 class MotoClienteAdapter(
     private var items: List<MotoCliente>,
     private val onClick: (MotoCliente) -> Unit,
-    private val onEliminar: (MotoCliente) -> Unit
+    private val onEliminar: (MotoCliente) -> Unit,
+    private val mostrarEliminar: Boolean = true
 ) : RecyclerView.Adapter<MotoClienteAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemMotoClienteBinding) : RecyclerView.ViewHolder(binding.root)
@@ -26,6 +28,7 @@ class MotoClienteAdapter(
             tvMatricula.text = moto.matricula
             tvKm.text = "${moto.km} km"
             root.setOnClickListener { onClick(moto) }
+            btnEliminar.visibility = if (mostrarEliminar) View.VISIBLE else View.GONE
             btnEliminar.setOnClickListener { onEliminar(moto) }
         }
     }

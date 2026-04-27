@@ -455,6 +455,12 @@ class CitaDetalleFragment : Fragment() {
         else -> Color.GRAY
     }
 
+    override fun onResume() { // actualiza el fragment al entrar de nuevo
+        super.onResume()
+        val rol = session.getRol() ?: "INVITADO"
+        val clienteId = session.getClienteId()
+        viewModel.cargarCitaYReparacion(citaId, rol, clienteId)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

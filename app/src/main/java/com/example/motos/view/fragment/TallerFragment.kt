@@ -343,6 +343,14 @@ class TallerFragment : Fragment() {
             .show()
     }
 
+    override fun onResume() { // recarga automaticamente al volver al fragment
+        super.onResume()
+        val rol = session.getRol() ?: "INVITADO"
+        val clienteId = session.getClienteId()
+        notificacionesOcultas = false
+        cargar(rol, clienteId)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

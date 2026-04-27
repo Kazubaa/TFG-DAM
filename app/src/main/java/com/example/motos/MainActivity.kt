@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.motos.databinding.ActivityMainBinding
 import com.example.motos.utils.SessionManager
 import com.example.motos.view.activity.LoginActivity
+import com.example.motos.view.fragment.HistorialClientesFragment
 import com.example.motos.view.fragment.InicioFragment
 import com.example.motos.view.fragment.MotoSegundaManoFragment
 import com.example.motos.view.fragment.PerfilFragment
@@ -106,6 +107,8 @@ class MainActivity : AppCompatActivity() {
         }
         if (rol == "MECANICO") {
             popup.menu.add(0, 4, 3, "Solicitudes de Reparaciones")
+            popup.menu.add(0, 7, 7, "Historial clientes")
+
         }
         if (rol == "VENDEDOR") {
             popup.menu.add(0, 5, 4, "Solicitudes de Reservas")
@@ -114,6 +117,8 @@ class MainActivity : AppCompatActivity() {
             popup.menu.add(0, 2, 1, "Mis reservas")
             popup.menu.add(0, 3, 2, "Citas")
             popup.menu.add(0, 4, 3, "Reparaciones")
+            popup.menu.add(0, 7, 7, "Historial clientes")
+
             popup.menu.add(0, 5, 4, "Solicitudes de reservas")
             popup.menu.add(0, 6, 6, "Crear usuario")
 
@@ -154,6 +159,13 @@ class MainActivity : AppCompatActivity() {
                 6 ->{
                     mostrarDialogoCrearUsuario()
 
+                    true
+                }
+                7 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, HistorialClientesFragment())
+                        .addToBackStack(null)
+                        .commit()
                     true
                 }
                 99 -> {

@@ -295,6 +295,14 @@ class PerfilFragment : Fragment() {
             .commit()
     }
 
+    override fun onResume() { // actualizar al volver a abrir el fragment
+        super.onResume()
+        val clienteId = session.getClienteId()
+        if (session.getRol() == "CLIENTE" && clienteId != -1L) {
+            tallerViewModel.cargarMotosCliente(clienteId)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

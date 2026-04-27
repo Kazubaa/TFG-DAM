@@ -41,12 +41,12 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
             try {
                 val response = repository.register(username, password)
                 if (response.isSuccessful && response.body() != null) {
-                    _authState.value = AuthState.Success(response.body()!!)
+                    login(username, password)
                 } else {
                     _authState.value = AuthState.Error("Error al registrarse")
                 }
             } catch (e: Exception) {
-                _authState.value = AuthState.Error("Error de conexion: ${e.message}")
+                _authState.value = AuthState.Error("Error de conexión: ${e.message}")
             }
         }
     }
