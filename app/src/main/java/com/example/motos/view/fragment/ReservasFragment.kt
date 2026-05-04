@@ -60,8 +60,9 @@ class ReservasFragment : Fragment() {
         }
 
         viewModel.reservas.observe(viewLifecycleOwner) { list ->
-            adapter.updateList(list)
-            binding.tvEmpty.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+            val ordenadas = list.sortedByDescending { it.id }
+            adapter.updateList(ordenadas)
+            binding.tvEmpty.visibility = if (ordenadas.isEmpty()) View.VISIBLE else View.GONE
         }
 
         viewModel.accionCompletada.observe(viewLifecycleOwner) {

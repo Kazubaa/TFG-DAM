@@ -11,15 +11,19 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+
+
+        <!-- Seccion Motos -->
         <TextView
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="40dp"
             android:text="Bienvenido"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp"/>
+            android:textStyle="bold" />
 
         <View
             android:layout_width="109dp"
@@ -27,7 +31,6 @@
             android:layout_marginBottom="24dp"
             android:background="@color/honda_red" />
 
-        <!-- Seccion Motos -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

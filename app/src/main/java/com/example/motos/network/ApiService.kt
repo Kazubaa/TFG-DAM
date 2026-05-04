@@ -5,6 +5,7 @@ import com.example.motos.model.CitaRequest
 import com.example.motos.model.Cliente
 import com.example.motos.model.ClienteRequest
 import com.example.motos.model.ImagenMoto
+import com.example.motos.model.ImagenMotoNueva
 import com.example.motos.model.LoginRequest
 import com.example.motos.model.LoginResponse
 import com.example.motos.model.Mecanico
@@ -12,6 +13,8 @@ import com.example.motos.model.MecanicoRequest
 import com.example.motos.model.MecanicoSimple
 import com.example.motos.model.MotoCliente
 import com.example.motos.model.MotoClienteRequest
+import com.example.motos.model.MotoNueva
+import com.example.motos.model.MotoNuevaRequest
 import com.example.motos.model.MotoSegundaMano
 import com.example.motos.model.MotoSegundaManoRequest
 import com.example.motos.model.RegisterRequest
@@ -72,11 +75,6 @@ interface ApiService {
     @GET("reservas")
     suspend fun getReservas(): Response<List<Reserva>>
 
-    @PUT("reservas/{id}")
-    suspend fun actualizarReserva(
-        @Path("id") id: Long,
-        @Body request: ReservaRequest
-    ): Response<Reserva>
 
     // Imagenes
     @Multipart
@@ -235,4 +233,66 @@ interface ApiService {
         @Path("id") id: Long,
         @Body request: VendedorRequest
     ): Response<Vendedor>
+
+
+
+    //Motos nuevas
+
+
+    @GET("motosNuevas")
+    suspend fun getMotosNuevas(): Response<List<MotoNueva>>
+
+    @GET("motosNuevas/{id}")
+    suspend fun getMotoNueva(@Path("id") id: Long): Response<MotoNueva>
+
+    @GET("motosNuevas/marca/{marca}")
+    suspend fun getMotosNuevasByMarca(@Path("marca") marca: String): Response<List<MotoNueva>>
+
+    @GET("motosNuevas/marca/{marca}/categoria/{categoria}")
+    suspend fun getMotosNuevasByMarcaCategoria(
+        @Path("marca") marca: String,
+        @Path("categoria") categoria: String
+    ): Response<List<MotoNueva>>
+
+    @POST("motosNuevas")
+    suspend fun crearMotoNueva(@Body request: MotoNuevaRequest): Response<MotoNueva>
+
+    @PUT("motosNuevas/{id}")
+    suspend fun actualizarMotoNueva(@Path("id") id: Long, @Body request: MotoNuevaRequest): Response<MotoNueva>
+
+    @DELETE("motosNuevas/{id}")
+    suspend fun eliminarMotoNueva(@Path("id") id: Long): Response<Unit>
+
+    @GET("imagenesMotoNueva/moto/{motoId}")
+    suspend fun getImagenesMotoNueva(@Path("motoId") motoId: Long): Response<List<ImagenMotoNueva>>
+
+    @GET("imagenesMotoNueva/moto/{motoId}/tipo/{tipo}")
+    suspend fun getImagenesMotoNuevaPorTipo(
+        @Path("motoId") motoId: Long,
+        @Path("tipo") tipo: String
+    ): Response<List<ImagenMotoNueva>>
+
+    @Multipart
+    @POST("imagenesMotoNueva/upload")
+    suspend fun subirImagenMotoNueva(
+        @Part("motoId") motoId: RequestBody,
+        @Part file: MultipartBody.Part,
+        @Part("tipo") tipo: RequestBody
+    ): Response<ImagenMotoNueva>
+
+    @DELETE("imagenesMotoNueva/{id}")
+    suspend fun eliminarImagenMotoNueva(@Path("id") id: Long): Response<Unit>
+
+
+    //Video
+
+    @Multipart
+    @POST("videosMotoNueva/upload")
+    suspend fun subirVideoMotoNueva(
+        @Part("motoId") motoId: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Response<Map<String, String>>
+
+    @DELETE("videosMotoNueva/{motoId}")
+    suspend fun eliminarVideoMotoNueva(@Path("motoId") motoId: Long): Response<Unit>
 }

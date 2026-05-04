@@ -29,7 +29,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="-240dp"
+                android:layout_marginTop="-215dp"
                 android:src="@drawable/ic_back"
                 android:background="@drawable/bg_circle_dark"
                 app:tint="#FFFFFF"

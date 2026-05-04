@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1A1A1A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <ImageButton
+            android:id="@+id/btnVolver"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            app:tint="#FFFFFF" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:letterSpacing="0.1"
+            android:text="GESTIONAR IMÁGENES"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- GALERÍA -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GALERÍA"
+                android:textColor="#CC0000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"/>
+
+            <Button
+                android:id="@+id/btnSeleccionarGaleria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Seleccionar fotos"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1976D2"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tvSeleccionadasGaleria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#AAAAAA"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnSubirGaleria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SUBIR A GALERÍA"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#CC0000"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGaleria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#3A3A3A"
+                android:layout_marginVertical="16dp"/>
+
+            <!-- 360 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VISTA 360°"
+                android:textColor="#CC0000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sube las imágenes ordenadas (mínimo 8). Cada imagen es un ángulo de la moto."
+                android:textColor="#AAAAAA"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"/>
+
+            <Button
+                android:id="@+id/btnSeleccionar360"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Seleccionar fotos 360°"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1976D2"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tvSeleccionadas360"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#AAAAAA"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnSubir360"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SUBIR A 360°"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#CC0000"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv360"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#3A3A3A"
+                android:layout_marginVertical="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VÍDEO"
+                android:textColor="#CC0000"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"/>
+
+            <Button
+                android:id="@+id/btnSeleccionarVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Seleccionar vídeo"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1976D2"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tvVideoSeleccionado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#AAAAAA"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnSubirVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SUBIR VÍDEO"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#CC0000"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnEliminarVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eliminar vídeo actual"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#F44336"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

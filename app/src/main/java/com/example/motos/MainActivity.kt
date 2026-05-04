@@ -12,6 +12,7 @@ import com.example.motos.utils.SessionManager
 import com.example.motos.view.activity.LoginActivity
 import com.example.motos.view.fragment.HistorialClientesFragment
 import com.example.motos.view.fragment.InicioFragment
+import com.example.motos.view.fragment.MarcasFragment
 import com.example.motos.view.fragment.MotoSegundaManoFragment
 import com.example.motos.view.fragment.PerfilFragment
 import com.example.motos.view.fragment.ReservasFragment
@@ -67,7 +68,9 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_motos -> {
-                    // TODO: MotoFragment
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, MarcasFragment())
+                        .commit()
                     true
                 }
                 R.id.nav_segunda -> {

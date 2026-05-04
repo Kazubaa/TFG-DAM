@@ -22,6 +22,7 @@
                 android:layout_height="91dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:layout_marginTop="40dp"
                 android:paddingHorizontal="16dp">
 
                 <ImageButton
@@ -144,6 +145,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="phone"
+                            android:maxLength="9"
+                            android:digits="0123456789"
                             android:textColor="#FFFFFF"/>
                     </com.google.android.material.textfield.TextInputLayout>
 

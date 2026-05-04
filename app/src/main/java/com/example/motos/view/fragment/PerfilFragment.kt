@@ -132,6 +132,8 @@ class PerfilFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            if (!telefonoValido(telefono)) return@setOnClickListener
+
             AlertDialog.Builder(requireContext())
                 .setTitle("Guardar cambios")
                 .setMessage("¿Guardar estos datos?")
@@ -176,6 +178,8 @@ class PerfilFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            if (!telefonoValido(telefono)) return@setOnClickListener
+
             AlertDialog.Builder(requireContext())
                 .setTitle("Guardar cambios")
                 .setMessage("¿Guardar estos datos?")
@@ -219,6 +223,8 @@ class PerfilFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            if (!telefonoValido(telefono)) return@setOnClickListener
+
             AlertDialog.Builder(requireContext())
                 .setTitle("Guardar cambios")
                 .setMessage("¿Guardar estos datos?")
@@ -232,6 +238,14 @@ class PerfilFragment : Fragment() {
         }
 
         perfilViewModel.cargarVendedor(vendedorId)
+    }
+
+    private fun telefonoValido(telefono: String): Boolean {
+        if (telefono.length != 9 || !telefono.all { it.isDigit() }) {
+            Toast.makeText(context, "El teléfono debe tener 9 dígitos", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     private fun setupRecyclerMotos() {
@@ -295,7 +309,7 @@ class PerfilFragment : Fragment() {
             .commit()
     }
 
-    override fun onResume() { // actualizar al volver a abrir el fragment
+    override fun onResume() {
         super.onResume()
         val clienteId = session.getClienteId()
         if (session.getRol() == "CLIENTE" && clienteId != -1L) {

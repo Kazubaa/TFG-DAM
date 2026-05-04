@@ -20,7 +20,7 @@
             <!-- Toolbar -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="63dp"
+                android:layout_height="96dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp">
