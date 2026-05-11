@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupBottomNav()
+        binding.bottomNav.selectedItemId = R.id.nav_inicio
     }
 
     private fun setupBottomNav() {

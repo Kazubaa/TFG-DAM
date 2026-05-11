@@ -35,14 +35,14 @@
                 app:tint="#FFFFFF"
                 android:contentDescription="Volver"/>
 
+            <!-- Botón añadir imagen ADMIN/VENDEDOR -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvImagenes"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:orientation="horizontal"
-                android:clipToPadding="false"/>
+                android:clipToPadding="false"
+                android:orientation="horizontal" />
 
-            <!-- Botón añadir imagen ADMIN/VENDEDOR -->
             <Button
                 android:id="@+id/btnAnadirImagen"
                 android:layout_width="wrap_content"
