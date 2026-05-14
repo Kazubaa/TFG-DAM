@@ -1,23 +1,7 @@
 # Descripción del proyecto
-Se trata de una aplicación que conjunta un concesionario de motos junto a un taller para mayor accesibilidad, la cual dispone de una aplicación móvil para mejorar la gestión entre reservas y citas tanto de vehiculos como de taller. Permite a los usuarios una solución para dar mantenimientos a sus motos u observar algunas motos para su compra. Para los empleados permite tanto actualizar como subir motos nuevas o reservas  y gestionar citas en taller para el mantenimiento de los vehículos de los clientes con un gestor de citas.
+Se trata de una aplicación que integra un concesionario de motos junto a un taller para mayor accesibilidad. Dispone de una aplicación móvil que mejora la gestión de reservas y citas, tanto de vehículos como de taller. Permite a los usuarios solicitar el mantenimiento de sus motos o consultar el catálogo de motos disponibles para su compra. Para los empleados, permite subir y actualizar motos nuevas y de segunda mano, gestionar reservas y controlar las citas del taller para el mantenimiento de los vehículos de los clientes.
 
 # Información sobre despliegue
-Manual de Despliegue — Kaz Motors
-Aplicación de gestión integral para concesionario de motocicletas
-Backend Spring Boot + Aplicación Android
-Antonio Jesús Castillo Henares · TFG 2025/2026 · IES Gran Capitán · Córdoba
-
-Índice
-
-Introducción
-Requisitos previos
-Estructura del proyecto
-Despliegue del backend
-Despliegue de la aplicación móvil
-Generación del APK
-Instalación del APK
-Mantenimiento y resolución de problemas
-
 
 1. Introducción
 Este documento describe paso a paso cómo desplegar la aplicación. El sistema se compone de un backend REST hecho con Spring Boot, una base de datos MySQL y una aplicación móvil en Kotlin.
