@@ -47,35 +47,30 @@
                 app:tint="#CC0000" />
         </LinearLayout>
 
-        <!-- Imagen / 360 -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:background="#0F0F0F">
 
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerGaleria"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
             <ImageView
                 android:id="@+id/ivPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:visibility="gone"/>
 
-            <ImageButton
-                android:id="@+id/btnPrev"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="start|center_vertical"
-                android:src="@android:drawable/ic_media_previous"
-                android:background="@android:color/transparent"
-                app:tint="#FFFFFF"/>
-
-            <ImageButton
-                android:id="@+id/btnNext"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="end|center_vertical"
-                android:src="@android:drawable/ic_media_next"
-                android:background="@android:color/transparent"
-                app:tint="#FFFFFF"/>
+            <LinearLayout
+                android:id="@+id/layoutIndicadores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="40dp"
+                android:orientation="horizontal"/>
 
             <Button
                 android:id="@+id/btnToggle360"
@@ -87,6 +82,18 @@
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#CC0000"
                 android:padding="8dp"/>
+
+            <ImageButton
+                android:id="@+id/btnPrev"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"/>
+
+            <ImageButton
+                android:id="@+id/btnNext"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"/>
         </FrameLayout>
 
         <TextView
@@ -100,6 +107,14 @@
             android:layout_marginTop="4dp"
             android:visibility="gone"/>
 
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/playerVideo"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/tvLabelVideo"
             android:layout_width="wrap_content"
@@ -111,14 +126,6 @@
             android:letterSpacing="0.1"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:visibility="gone"/>
-
-        <androidx.media3.ui.PlayerView
-            android:id="@+id/playerVideo"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
             android:visibility="gone"/>
 
         <!-- Datos -->

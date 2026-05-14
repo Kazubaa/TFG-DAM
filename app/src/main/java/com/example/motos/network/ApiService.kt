@@ -4,6 +4,7 @@ import com.example.motos.model.Cita
 import com.example.motos.model.CitaRequest
 import com.example.motos.model.Cliente
 import com.example.motos.model.ClienteRequest
+import com.example.motos.model.ForgotPasswordRequest
 import com.example.motos.model.ImagenMoto
 import com.example.motos.model.ImagenMotoNueva
 import com.example.motos.model.LoginRequest
@@ -43,6 +44,9 @@ interface ApiService {
 
     @POST("auth/register")
     suspend fun register(@Body request: RegisterRequest): Response<LoginResponse>
+
+    @POST("auth/forgot-password")
+    suspend fun forgotPassword(@Body req: ForgotPasswordRequest): Response<Map<String, String>>
 
 
     @GET("imagenes/promociones")

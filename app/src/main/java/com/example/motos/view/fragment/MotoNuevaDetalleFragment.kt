@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.motos.R
+import com.example.motos.adapter.GaleriaAdapter
 import com.example.motos.databinding.FragmentMotoNuevaDetalleBinding
 import com.example.motos.model.ImagenMotoNueva
 import com.example.motos.network.RetrofitClient
@@ -30,13 +31,11 @@ class MotoNuevaDetalleFragment : Fragment() {
     private var modo360 = false
     private var galeria: List<ImagenMotoNueva> = emptyList()
     private var imagenes360: List<ImagenMotoNueva> = emptyList()
-    private var indiceGaleria = 0
     private var frame360 = 0
 
     private var player: androidx.media3.exoplayer.ExoPlayer? = null
 
     private var enFullscreen = false
-    private var originalOrientation = 0
     private var originalSystemUi = 0
 
     private val viewModel: MotoNuevaViewModel by viewModels {
@@ -80,11 +79,9 @@ class MotoNuevaDetalleFragment : Fragment() {
 
         viewModel.imagenesGaleria.observe(viewLifecycleOwner) { list ->
             galeria = list
-            if (!modo360) {
-                indiceGaleria = 0
-                mostrarFotoGaleria()
-            }
             val baseUrl = com.example.motos.utils.Constants.BASE_URL.removeSuffix("/")
+            val urls = list.map { "$baseUrl/uploads/imagenes/${it.url}" }
+            binding.viewPagerGaleria.adapter = GaleriaAdapter(urls)
             list.forEach { img ->
                 Glide.with(this).load("$baseUrl/uploads/imagenes/${img.url}").preload()
             }
@@ -94,23 +91,10 @@ class MotoNuevaDetalleFragment : Fragment() {
             imagenes360 = list
             binding.btnToggle360.visibility = if (list.size >= 8) View.VISIBLE else View.GONE
 
-            // Precarga todas las imagenes 360
             val baseUrl = com.example.motos.utils.Constants.BASE_URL.removeSuffix("/")
             list.forEach { img ->
                 Glide.with(this).load("$baseUrl/uploads/imagenes/${img.url}").preload()
             }
-        }
-
-        binding.btnPrev.setOnClickListener {
-            if (modo360 || galeria.isEmpty()) return@setOnClickListener
-            indiceGaleria = (indiceGaleria - 1 + galeria.size) % galeria.size
-            mostrarFotoGaleria()
-        }
-
-        binding.btnNext.setOnClickListener {
-            if (modo360 || galeria.isEmpty()) return@setOnClickListener
-            indiceGaleria = (indiceGaleria + 1) % galeria.size
-            mostrarFotoGaleria()
         }
 
         binding.btnToggle360.setOnClickListener { toggle360() }
@@ -136,9 +120,7 @@ class MotoNuevaDetalleFragment : Fragment() {
             binding.btnEditar.visibility = View.VISIBLE
             binding.btnEditar.setOnClickListener {
                 val fragment = AnadirMotoNuevaFragment().apply {
-                    arguments = Bundle().apply {
-                        putLong("motoId", motoId)
-                    }
+                    arguments = Bundle().apply { putLong("motoId", motoId) }
                 }
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, fragment)
@@ -159,16 +141,18 @@ class MotoNuevaDetalleFragment : Fragment() {
 
         viewModel.cargarMoto(motoId)
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : androidx.activity.OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (enFullscreen) {
-                    toggleFullscreen(false)
-                } else {
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : androidx.activity.OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (enFullscreen) {
+                        toggleFullscreen(false)
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
                 }
-            }
-        })
+            })
     }
 
     private fun configurarVideo(videoFile: String) {
@@ -200,21 +184,16 @@ class MotoNuevaDetalleFragment : Fragment() {
 
         if (isFullscreen) {
             originalSystemUi = activity.window.decorView.systemUiVisibility
-
             contenedorOriginal = binding.playerVideo.parent as? ViewGroup
             indiceOriginal = contenedorOriginal?.indexOfChild(binding.playerVideo) ?: -1
             paramsOriginales = binding.playerVideo.layoutParams
-
             contenedorOriginal?.removeView(binding.playerVideo)
             binding.playerVideo.setBackgroundColor(android.graphics.Color.BLACK)
             decor.addView(
-                binding.playerVideo,
-                ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+                binding.playerVideo, ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
                 )
             )
-
             activity.window.decorView.systemUiVisibility = (
                     View.SYSTEM_UI_FLAG_FULLSCREEN
                             or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -224,24 +203,9 @@ class MotoNuevaDetalleFragment : Fragment() {
             decor.removeView(binding.playerVideo)
             binding.playerVideo.setBackgroundColor(android.graphics.Color.TRANSPARENT)
             contenedorOriginal?.addView(binding.playerVideo, indiceOriginal, paramsOriginales)
-
             activity.window.decorView.systemUiVisibility = originalSystemUi
         }
         enFullscreen = isFullscreen
-    }
-
-    private fun mostrarFotoGaleria() {
-        if (galeria.isEmpty()) {
-            binding.ivPrincipal.setImageResource(android.R.color.darker_gray)
-            return
-        }
-        val baseUrl = com.example.motos.utils.Constants.BASE_URL.removeSuffix("/")
-        val url = "$baseUrl/uploads/imagenes/${galeria[indiceGaleria].url}"
-        Glide.with(this)
-            .load(url)
-            .dontAnimate()
-            .placeholder(binding.ivPrincipal.drawable)
-            .into(binding.ivPrincipal)
     }
 
     private fun mostrarFrame360() {
@@ -260,17 +224,16 @@ class MotoNuevaDetalleFragment : Fragment() {
         modo360 = !modo360
         if (modo360) {
             binding.btnToggle360.text = "GALERÍA"
-            binding.btnPrev.visibility = View.GONE
-            binding.btnNext.visibility = View.GONE
+            binding.viewPagerGaleria.visibility = View.GONE
+            binding.ivPrincipal.visibility = View.VISIBLE
             binding.tvHint360.visibility = View.VISIBLE
             frame360 = 0
             mostrarFrame360()
         } else {
             binding.btnToggle360.text = "360°"
-            binding.btnPrev.visibility = View.VISIBLE
-            binding.btnNext.visibility = View.VISIBLE
+            binding.viewPagerGaleria.visibility = View.VISIBLE
+            binding.ivPrincipal.visibility = View.GONE
             binding.tvHint360.visibility = View.GONE
-            mostrarFotoGaleria()
         }
     }
 
@@ -286,6 +249,7 @@ class MotoNuevaDetalleFragment : Fragment() {
                     frameInicio = frame360
                     true
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     val deltaX = event.x - inicioX
                     val sensibilidad = binding.ivPrincipal.width / imagenes360.size.toFloat()
@@ -297,6 +261,7 @@ class MotoNuevaDetalleFragment : Fragment() {
                     }
                     true
                 }
+
                 else -> false
             }
         }

@@ -38,8 +38,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         app:cardCornerRadius="16dp"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="8dp"
@@ -52,12 +52,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/white"
             android:padding="28dp">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:tabBackground="@color/white"
                 app:tabSelectedTextColor="@color/honda_red"
                 app:tabTextColor="@color/honda_gray_dark"
                 app:tabIndicatorColor="@color/honda_red"
@@ -71,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Usuario"
                 app:boxStrokeColor="@color/honda_red"
+                app:hintTextColor="@color/honda_gray_dark"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -89,14 +93,35 @@
                 android:layout_height="wrap_content"
                 android:hint="Contraseña"
                 app:boxStrokeColor="@color/honda_red"
+                app:hintTextColor="@color/honda_gray_dark"
                 app:endIconMode="password_toggle"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:imeOptions="actionDone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Correo electrónico"
+                app:boxStrokeColor="@color/honda_red"
+                app:hintTextColor="@color/honda_gray_dark"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/black"
                     android:imeOptions="actionDone"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -110,6 +135,7 @@
                 android:backgroundTint="@color/honda_red"
                 android:textStyle="bold"
                 android:letterSpacing="0.1"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp"/>
 
             <ProgressBar
@@ -121,14 +147,26 @@
                 android:layout_marginBottom="12dp"/>
 
             <TextView
+                android:id="@+id/tvForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"
+                android:text="¿Has olvidado tu contraseña?"
+                android:textColor="@color/honda_red"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <TextView
                 android:id="@+id/tvGuest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Continuar como invitado"
                 android:textColor="@color/honda_gray_dark"
-                android:textSize="13sp"
-                android:paddingTop="4dp"
+                android:textSize="14sp"
+                android:paddingTop="8dp"
                 android:paddingBottom="4dp"/>
 
         </LinearLayout>

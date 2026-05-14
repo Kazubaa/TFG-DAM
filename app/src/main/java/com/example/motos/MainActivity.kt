@@ -194,32 +194,36 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton("Crear") { _, _ ->
                 val username = dialogBinding.etUsername.text.toString().trim()
                 val password = dialogBinding.etPassword.text.toString().trim()
+                val email = dialogBinding.etEmail.text.toString().trim()
                 val rol = if (dialogBinding.rbVendedor.isChecked) "VENDEDOR" else "MECANICO"
 
-                if (username.isEmpty() || password.isEmpty()) {
+                if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
                     android.widget.Toast.makeText(this, "Completa los campos", android.widget.Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    android.widget.Toast.makeText(this, "Email no válido", android.widget.Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
 
-                crearUsuario(username, password, rol)
+                crearUsuario(username, password, email, rol)
             }
             .setNegativeButton("Cancelar", null)
             .show()
     }
 
-    private fun crearUsuario(username: String, password: String, rol: String) {
-        lifecycleScope.
-        launch {
+    private fun crearUsuario(username: String, password: String, email: String, rol: String) {
+        lifecycleScope.launch {
             try {
                 val api = com.example.motos.network.RetrofitClient.getInstance(this@MainActivity)
                 val response = api.register(
-                    com.example.motos.model.RegisterRequest(username, password, rol)
+                    com.example.motos.model.RegisterRequest(username, password, rol, email)
                 )
                 if (response.isSuccessful) {
                     android.widget.Toast.makeText(
                         this@MainActivity,
-                        "Usuario $rol creado correctamente",
-                        android.widget.Toast.LENGTH_SHORT
+                        "Usuario $rol creado correctamente.",
+                        android.widget.Toast.LENGTH_LONG
                     ).show()
                 } else {
                     android.widget.Toast.makeText(

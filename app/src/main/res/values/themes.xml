@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Motos" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Motos" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/honda_red</item>
         <item name="colorPrimaryDark">@color/honda_dark</item>
         <item name="colorAccent">@color/honda_red</item>

@@ -61,6 +61,8 @@ class LoginActivity : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 isLoginMode = tab.position == 0
                 binding.btnAction.text = if (isLoginMode) "ENTRAR" else "REGISTRARSE"
+                binding.tilEmail.visibility = if (isLoginMode) View.GONE else View.VISIBLE
+                binding.tvForgotPassword.visibility = if (isLoginMode) View.VISIBLE else View.GONE
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
@@ -77,12 +79,28 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (isLoginMode) viewModel.login(username, password)
-            else viewModel.register(username, password)
+            if (isLoginMode) {
+                viewModel.login(username, password)
+            } else {
+                val email = binding.etEmail.text.toString().trim()
+                if (email.isEmpty()) {
+                    Toast.makeText(this, "Introduce tu email", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(this, "Email no válido", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                viewModel.register(username, password, email)
+            }
         }
 
         binding.tvGuest.setOnClickListener {
             goToMain(isGuest = true)
+        }
+
+        binding.tvForgotPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
     }
 
@@ -105,6 +123,19 @@ class LoginActivity : AppCompatActivity() {
                     state.data.mecanicoId?.let { session.saveMecanicoId(it) }
                     state.data.vendedorId?.let { session.saveVendedorId(it) }
                     goToMain()
+                }
+                is AuthState.RegisterSuccess -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.btnAction.isEnabled = true
+                    Toast.makeText(
+                        this,
+                        "Registro correcto. Revisa tu email para confirmar la cuenta.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    // Volver al modo login
+                    binding.tabLayout.getTabAt(0)?.select()
+                    binding.etPassword.text?.clear()
+                    binding.etEmail.text?.clear()
                 }
                 is AuthState.Error -> {
                     binding.progressBar.visibility = View.GONE
